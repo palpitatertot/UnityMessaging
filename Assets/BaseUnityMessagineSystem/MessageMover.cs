@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,8 +18,7 @@ public class MessageMover : MonoBehaviour {
 		
 	}
 
-	void MSGSetPosition(Vector3 position){
+	public void MSGSetPosition(Vector3 position){
 		agent.destination = position;
 	}
-
 }

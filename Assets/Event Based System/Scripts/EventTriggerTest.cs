@@ -5,25 +5,10 @@ public class EventTriggerTest : MonoBehaviour
 {
     
     void Update()
-    {
-        if (Input.GetKeyDown("q"))
+    {        
+        if (Input.GetMouseButtonDown(0))
         {
-            EventManager.TriggerEvent("test");
-        }
-
-        if (Input.GetKeyDown("o"))
-        {
-            EventManager.TriggerEvent("Spawn");
-        }
-
-        if (Input.GetKeyDown("p"))
-        {
-            EventManager.TriggerEvent("Destroy");
-        }
-
-        if (Input.GetKeyDown("x"))
-        {
-            EventManager.TriggerEvent("Junk");
-        }
+            EventManager.TriggerEvent("Move");
+        }        
     }
 }
