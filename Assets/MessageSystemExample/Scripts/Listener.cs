@@ -8,28 +8,21 @@ public class Listener : MonoBehaviour {
 	NavMeshAgent agent;
 
 	void Start() {
-		MessagingSystem.Instance.AttachListener(typeof(MyCustomMessage),
-			this.HandleMyCustomMessage);
+		MessagingSystem.Instance.AttachListener(typeof(MoveToMessage),
+			this.HandleMoveToMessage);
 		agent = GetComponent<NavMeshAgent>();
 	}
 
-	bool HandleMyCustomMessage(BaseMessage msg) {
-		MyCustomMessage castMsg = msg as MyCustomMessage;
-		if (castMsg._intValue == 5) {
-			
-				RaycastHit hit;
-
-				if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 100)) {
-					agent.destination = hit.point;
-				}
-		}
+	bool HandleMoveToMessage(BaseMessage msg) {
+		MoveToMessage castMsg = msg as MoveToMessage;
+		agent.destination = castMsg._vecValue;
 		return false;
 	}
 
 	void OnDestroy() {
 		if (MessagingSystem.IsAlive) {
-			MessagingSystem.Instance.DetachListener(typeof(MyCustomMessage),
-				this.HandleMyCustomMessage);
+			MessagingSystem.Instance.DetachListener(typeof(MoveToMessage),
+				this.HandleMoveToMessage);
 		}
 	}
 
