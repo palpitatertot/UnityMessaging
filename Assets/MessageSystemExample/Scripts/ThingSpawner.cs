@@ -7,8 +7,8 @@ public class ThingSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		for (int i=0;i<2000;i++){
-			float a = i / 50;
+		for (int i=0;i<5000;i++){
+			float a = i / 10;
 			Instantiate(prefab, new Vector3(a, 1, a), Quaternion.identity);
 			Instantiate(prefab, new Vector3(-a, 1, -a), Quaternion.identity);
 		}

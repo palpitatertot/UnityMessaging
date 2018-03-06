@@ -14,11 +14,12 @@ public class Listener : MonoBehaviour {
 		MessagingSystem.Instance.AttachListener(typeof(MoveMessage),
 			this.HandleMoveMessage);
 		agent = GetComponent<NavMeshAgent>();
-		agent.speed = agent.speed + Random.Range (-2, 2);
+		agent.speed = agent.speed + Random.Range (-2f, 2f);
 	}
 
 	void Update() {
-		transform.position += moveVector;
+		Vector3 localMoveVector = moveVector * Random.Range (-.1f, 1f);
+		transform.position += localMoveVector;
 	}
 
 	bool HandleMoveToMessage(BaseMessage msg) {
