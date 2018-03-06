@@ -9,3 +9,10 @@ public class MoveToMessage : BaseMessage {
 		_vecValue = vecVal;
 	}
 }
+
+public class MoveMessage : BaseMessage {
+	public readonly Vector3 _vecValue;
+	public MoveMessage(Vector3 vecVal) {
+		_vecValue = vecVal;
+	}
+}

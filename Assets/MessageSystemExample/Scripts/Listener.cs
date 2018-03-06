@@ -6,12 +6,19 @@ using UnityEngine.AI;
 public class Listener : MonoBehaviour {
 
 	NavMeshAgent agent;
+	Vector3 moveVector = new Vector3(0,0,0);
 
 	void Start() {
 		MessagingSystem.Instance.AttachListener(typeof(MoveToMessage),
 			this.HandleMoveToMessage);
+		MessagingSystem.Instance.AttachListener(typeof(MoveMessage),
+			this.HandleMoveMessage);
 		agent = GetComponent<NavMeshAgent>();
 		agent.speed = agent.speed + Random.Range (-2, 2);
+	}
+
+	void Update() {
+		transform.position += moveVector;
 	}
 
 	bool HandleMoveToMessage(BaseMessage msg) {
@@ -20,10 +27,24 @@ public class Listener : MonoBehaviour {
 		return false;
 	}
 
+	bool HandleMoveMessage(BaseMessage msg) {
+		MoveMessage castMsg = msg as MoveMessage;
+		if (moveVector == castMsg._vecValue) {
+			moveVector = new Vector3(0,0,0);
+			return false;
+		}
+		moveVector = castMsg._vecValue;
+		return false;
+	}
+		
 	void OnDestroy() {
 		if (MessagingSystem.IsAlive) {
 			MessagingSystem.Instance.DetachListener(typeof(MoveToMessage),
 				this.HandleMoveToMessage);
+		}
+		if (MessagingSystem.IsAlive) {
+			MessagingSystem.Instance.DetachListener(typeof(MoveMessage),
+				this.HandleMoveMessage);
 		}
 	}
 
