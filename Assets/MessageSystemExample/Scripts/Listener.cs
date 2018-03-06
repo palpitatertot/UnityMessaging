@@ -11,6 +11,7 @@ public class Listener : MonoBehaviour {
 		MessagingSystem.Instance.AttachListener(typeof(MoveToMessage),
 			this.HandleMoveToMessage);
 		agent = GetComponent<NavMeshAgent>();
+		agent.speed = agent.speed + Random.Range (-2, 2);
 	}
 
 	bool HandleMoveToMessage(BaseMessage msg) {
