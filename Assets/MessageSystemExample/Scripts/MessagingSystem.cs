@@ -46,7 +46,7 @@ public class MessagingSystem : SingletonAsComponent<MessagingSystem> {
 
 	void Update() {
 		float timer = 0.0f;
-		if (interruptedListeners != null) {
+		if (false && interruptedListeners != null) {
 			for (; interruptedI < interruptedListeners.Count; ++interruptedI) {
 				if (interruptedListeners [interruptedI] (interruptedMsg)) {
 					interruptedListeners = null;
