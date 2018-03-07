@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class Listener : MonoBehaviour {
 
-	NavMeshAgent agent;
 	Vector3 moveVector = new Vector3(0,0,0);
 
 	void Start() {
@@ -13,8 +12,6 @@ public class Listener : MonoBehaviour {
 			this.HandleMoveToMessage);
 		MessagingSystem.Instance.AttachListener(typeof(MoveMessage),
 			this.HandleMoveMessage);
-		agent = GetComponent<NavMeshAgent>();
-		agent.speed = agent.speed + Random.Range (-2f, 2f);
 	}
 
 	void Update() {
@@ -24,7 +21,6 @@ public class Listener : MonoBehaviour {
 
 	bool HandleMoveToMessage(BaseMessage msg) {
 		MoveToMessage castMsg = msg as MoveToMessage;
-		agent.destination = castMsg._vecValue;
 		return false;
 	}
 
