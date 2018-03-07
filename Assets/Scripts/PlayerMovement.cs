@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour {
 
 		if (Input.GetKey("d")) {
 			rb.AddForce(1000 * Time.deltaTime, 0, 0);
-	}
-		if (Input.GetKey("a")) {
+	    }
+        if (Input.GetKey("a")) {
 			rb.AddForce(-1000 * Time.deltaTime, 0, 0);
 		}
 		if (Input.GetKey("w")) {

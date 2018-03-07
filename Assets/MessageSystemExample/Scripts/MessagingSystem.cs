@@ -114,6 +114,6 @@ public class MessagingSystem : SingletonAsComponent<MessagingSystem> {
 				}
 				listenerList.Remove(handler);
 				return true;
-				}
+	}
 
 }

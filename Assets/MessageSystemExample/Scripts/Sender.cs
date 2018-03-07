@@ -24,5 +24,6 @@ public class Sender : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.DownArrow)) {
 			MessagingSystem.Instance.QueueMessage(new MoveMessage(new Vector3(0,0,-1)));
 		}
+        
 	}
 }
