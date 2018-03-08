@@ -156,7 +156,7 @@ Prefab:
     - target: {fileID: 114289597361430168, guid: 3e96253b299374301b962659227625df,
         type: 2}
       propertyPath: NumThings
-      value: 5000
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3e96253b299374301b962659227625df, type: 2}
