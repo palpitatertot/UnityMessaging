@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 195601150180156708}
   - component: {fileID: 114992034384104590}
   m_Layer: 0
-  m_Name: MessageMover
+  m_Name: BaseThing
   m_TagString: MessageReceiver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

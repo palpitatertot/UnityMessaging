@@ -10,6 +10,7 @@ public class Listener : MonoBehaviour {
 	Vector3 moveVector = new Vector3(0,0,0);
 	GameObject go;
 	Material mat;
+	bool moving, upswing;
 
 	void Start() {
 		MessagingSystem.Instance.AttachListener(typeof(MoveToMessage),
@@ -22,11 +23,28 @@ public class Listener : MonoBehaviour {
 		us = Camera.main.GetComponent<UnitSelectionComponent> ();
 		mat = GetComponent<Renderer> ().material;
 		mat.color = Color.blue;
+		moving = false;
+		upswing = true;
 	}
 
 	void Update() {
-		Vector3 localMoveVector = moveVector * Random.Range (-.1f, 1f);
+		float rand = UnityEngine.Random.Range (-.1f, 1f);
+		Vector3 localMoveVector = moveVector * rand;
 		transform.position += localMoveVector;
+		Vector3 t = transform.position;
+		if (moving && upswing) {
+			//Debug.Log ("UPSWING");
+			transform.position = t + new Vector3(0,.5f,0) * rand;
+			if (transform.position.y >= .5f) {
+				upswing = false;
+				transform.position = new Vector3 (t.x, .5f, t.z);
+			}
+		} else if (transform.position.y > 0) {
+			transform.position -= new Vector3(0,.66f,0); 
+		} else if (transform.position.y <= 0){
+			transform.position = new Vector3 (t.x, 0, t.z);
+			upswing = true;
+		}
 	}
 
 	bool HandleMoveToMessage(BaseMessage msg) {
@@ -39,16 +57,19 @@ public class Listener : MonoBehaviour {
 			MoveMessage castMsg = msg as MoveMessage;
 			if (moveVector == castMsg._vecValue) {
 				moveVector = new Vector3(0,0,0);
+				moving = false;
 				return false;
 			}
 			moveVector = castMsg._vecValue;
+			moving = true;
+			upswing = true;
 			return false;
 		}
-
 		return false;
 	}
 
 	bool HandleSelectionMessage(BaseMessage msg) {
+		Debug.Log ("hi");
 		if (us.IsWithinSelectionBounds (go)) {
 			mat.color = Color.red;
 			return false;
