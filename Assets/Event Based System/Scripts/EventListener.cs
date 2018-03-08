@@ -1,35 +1,49 @@
-﻿using Assets.Event_Based_System.Scripts;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class EventListener : MonoBehaviour {
+	UnitSelectionComponent us;
+	Vector3 moveVector = new Vector3(0,0,0);
+	GameObject go;
+	Material mat;
 
-    public MyVector3Event Event;
-    public EventTrigger.TriggerEvent customCallback;
-    private Vector3 moveVector = new Vector3(0,0,0);
   
     // Use this for initialization
     void Start () {
-        if (Event == null)
-            Event = new MyVector3Event();
-
-        //Event.AddListener(Move);
-
-       // EventManager.Event = Event;
+		EventManager.StartListening ("MoveEvent", MoveEventHandler);
+		EventManager.StartListening ("SelectionEvent", SelectionEventHandler);
+		go = this.gameObject;
+		us = Camera.main.GetComponent<UnitSelectionComponent> ();
+		mat = GetComponent<Renderer> ().material;
+		mat.color = Color.blue;
 	}
 	
 	// Update is called once per frame
 	void Update () {
         Vector3 localMoveVector = moveVector * Random.Range(-.1f, 1f);
-       // Debug.Log("Position:" + transform.position.ToString());
         transform.position += localMoveVector;
     }  
 
-    public void Move() {
-        moveVector = EventManager.globalVector;
-     //   Debug.Log("I told you to move");
+	public void MoveEventHandler(Vector3 parameter) {
+		Debug.Log (parameter);
+		if (mat.color == Color.red) {
+			if (moveVector == parameter) {
+				moveVector = new Vector3 (0, 0, 0);
+			} else {
+				moveVector = parameter;
+			}
+		}
     }
+
+	public void SelectionEventHandler(Vector3 parameter) {
+		Debug.Log ("Selecting");
+		if (us.IsWithinSelectionBounds (go)) {
+			mat.color = Color.red;
+		} else {
+			mat.color = Color.blue;
+		}
+	}
 }

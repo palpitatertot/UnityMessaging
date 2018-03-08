@@ -5,8 +5,7 @@ using System.Collections.Generic;
 
 public class EventManager : MonoBehaviour
 {
-
-    private Dictionary<string, UnityEvent> eventDictionary;
+    private Dictionary<string, ParameterEvent> eventDictionary;
 
     private static EventManager eventManager;
 
@@ -36,41 +35,41 @@ public class EventManager : MonoBehaviour
     {
         if (eventDictionary == null)
         {
-            eventDictionary = new Dictionary<string, UnityEvent>();
+            eventDictionary = new Dictionary<string, ParameterEvent>();
         }
     }
 
-    public static void StartListening(string eventName, UnityAction listener)
+	public static void StartListening(string eventName, UnityAction<Vector3> listener)
     {
-        UnityEvent thisEvent = null;
+        ParameterEvent thisEvent = null;
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.AddListener(listener);
         }
         else
         {
-            thisEvent = new UnityEvent();
+            thisEvent = new ParameterEvent();
             thisEvent.AddListener(listener);
             instance.eventDictionary.Add(eventName, thisEvent);
         }
     }
 
-    public static void StopListening(string eventName, UnityAction listener)
+	public static void StopListening(string eventName, UnityAction<Vector3> listener)
     {
         if (eventManager == null) return;
-        UnityEvent thisEvent = null;
+        ParameterEvent thisEvent = null;
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent.RemoveListener(listener);
         }
     }
 
-    public static void TriggerEvent(string eventName)
+	public static void TriggerEvent(string eventName, Vector3 parameter)
     {
-        UnityEvent thisEvent = null;
+        ParameterEvent thisEvent = null;
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
-            thisEvent.Invoke();
+			thisEvent.Invoke(parameter);
         }
     }
 }
