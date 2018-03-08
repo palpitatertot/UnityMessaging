@@ -11,10 +11,6 @@ public class MessagingSystem : SingletonAsComponent<MessagingSystem> {
 
 	private Dictionary<string,List<MessageHandlerDelegate>> _listenerDict = new Dictionary<string,List<MessageHandlerDelegate>>();
 
-	List<MessageHandlerDelegate> interruptedListeners;
-	BaseMessage interruptedMsg;
-	int interruptedI;
-
 	public bool AttachListener(System.Type type, MessageHandlerDelegate handler){
 		if (type == null) {
 			Debug.Log("MessagingSystem: AttachListener failed due to no message type specified");
@@ -46,22 +42,6 @@ public class MessagingSystem : SingletonAsComponent<MessagingSystem> {
 
 	void Update() {
 		float timer = 0.0f;
-		if (false && interruptedListeners != null) {
-			for (; interruptedI < interruptedListeners.Count; ++interruptedI) {
-				if (interruptedListeners [interruptedI] (interruptedMsg)) {
-					interruptedListeners = null;
-					interruptedMsg = null;
-					return; // msg handled
-				}
-				timer += Time.deltaTime;
-				if (timer > maxQueueProcessingTime) {
-					return;
-				}
-			}
-			interruptedListeners = null;
-			interruptedMsg = null;
-			interruptedI = 0;
-		}
 		while (_messageQueue.Count > 0) {
 			if (timer > maxQueueProcessingTime) {
 				return;
@@ -85,15 +65,7 @@ public class MessagingSystem : SingletonAsComponent<MessagingSystem> {
 		for(int i = 0; i < listenerList.Count; ++i) {
 			if (listenerList[i](msg))
 				return true; // message consumed by the delegate
-			timer += Time.deltaTime;
-			if (false && timer > maxQueueProcessingTime) {
-				interruptedListeners = listenerList;
-				interruptedMsg = msg;
-				interruptedI = i;
-				return true;
-			}
 		}
-		interruptedListeners = null;
 		return true;
 	}
 

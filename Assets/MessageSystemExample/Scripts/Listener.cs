@@ -69,7 +69,6 @@ public class Listener : MonoBehaviour {
 	}
 
 	bool HandleSelectionMessage(BaseMessage msg) {
-		Debug.Log ("hi");
 		if (us.IsWithinSelectionBounds (go)) {
 			mat.color = Color.red;
 			return false;

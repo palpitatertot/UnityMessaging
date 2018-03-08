@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Sender : MonoBehaviour {
-	UnitSelectionComponent selector;
 	public void Start() {
-		selector = Camera.main.GetComponent<UnitSelectionComponent> ();
 	}
 
 	public void Update() {
