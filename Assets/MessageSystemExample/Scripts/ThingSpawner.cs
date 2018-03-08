@@ -8,6 +8,7 @@ public class ThingSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		NumThings = NumThings / 2;
 		for (int i=0;i<NumThings;i++){
 			float a = i / 10;
 			Instantiate(prefab, new Vector3(a, 1, a), Quaternion.identity);
